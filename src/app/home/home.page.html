@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-row class="header-container">
+			<ion-img src="assets/icon/pokemon-icon.png" alt="Pokémon Logo" class="pokemon-logo"></ion-img>
+			<ion-title class="title">Pokémons</ion-title>
+		</ion-row>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<ion-searchbar placeholder="Buscar pelo nome" (ionInput)="search($event)" debounce="500" showClearButton="true"
+		animated class="searchbar"></ion-searchbar>
+
+	<ion-grid class="pokemons-grid">
+		<ion-row>
+			<ion-col size="6" size-md="4" size-lg="3" *ngFor="let pokemon of pokemons">
+				<ion-card class="pokemon-card" button="true">
+					<ion-card-content [style.background-color]="pokemon.backgroundColor" (click)="openDetails(pokemon)">
+						<ion-img [src]="pokemon.image" alt="{{ pokemon.name }}" loading="lazy"></ion-img>
+					</ion-card-content>
+					<ion-card-header>
+						<ion-card-title>{{ pokemon.name | titlecase }}</ion-card-title>
+					</ion-card-header>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+		<ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>
